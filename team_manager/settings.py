@@ -7,7 +7,7 @@ SECRET_KEY = '50&fynapuftf92+^s4=_bam492rd377evahthae8vu_8^4ei7%'
 
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -68,3 +68,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'www/static/'
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
