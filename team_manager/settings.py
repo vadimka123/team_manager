@@ -1,4 +1,6 @@
 import os
+import datetime
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -70,6 +72,28 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'www/static/'
+
+ANONYMOUS_USER_ID = -1
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+)
+
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=2),
+    'JWT_PAYLOAD_HANDLER':
+    'accounts.api.utils.jwt.jwt_payload_handler',
+    'JWT_PAYLOAD_GET_USERNAME_HANDLER': 'accounts.api.utils.jwt.jwt_get_username_from_payload_handler'
+}
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+]
+
 
 try:
     from local_settings import *
