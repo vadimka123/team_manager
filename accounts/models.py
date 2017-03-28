@@ -33,7 +33,7 @@ class CustomUser(AbstractBaseUser):
     objects = CustomUserManager()
 
     USERNAME_FIELD = u'username'
-    REQUIRED_FIELDS = [u'username', u'account_type']
+    REQUIRED_FIELDS = [u'account_type']
 
     class Meta:
         verbose_name = u'User'

@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import {grey500, white} from 'material-ui/styles/colors';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
+import Help from 'material-ui/svg-icons/action/help';
 import TextField from 'material-ui/TextField';
 import {Link} from 'react-router';
 
@@ -90,8 +91,7 @@ export class Login extends PureComponent {
                     <Paper style={styles.paper}>
                         <form>
                             <TextField hintText="Username" floatingLabelText="Username" fullWidth={true}
-                                       value={username || ''} disabled={lock}
-                                       errorText={errors.username || (errors.non_field_errors ? '' : null)}
+                                       value={username || ''} disabled={lock} errorText={errors.username}
                                        onChange={e => this.changeInput('username', e.target.value)} />
                             <TextField hintText="Password" floatingLabelText="Password" fullWidth={true}
                                        type="password" value={password || ''} disabled={lock}
@@ -105,6 +105,7 @@ export class Login extends PureComponent {
                         <Link to="/accounts/register/">
                             <FlatButton label="Register" style={styles.flatButton} icon={<PersonAdd />} />
                         </Link>
+                        <FlatButton label="Forgot Password?" style={styles.flatButton} icon={<Help />} disabled={true} />
                     </div>
                 </div>
             </MuiThemeProvider>

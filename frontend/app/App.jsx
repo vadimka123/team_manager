@@ -60,9 +60,9 @@ ReactDOM.render((
     <Provider store={store}>
         <Router history={history}>
             {AccountRouting}
-            {/*<Route path="/" component={Root} onEnter={requireAuth}>
+            <Route path="/" component={Root} onEnter={requireAuth}>
                 <Route path="*" component={NotFoundPage} />
-            </Route>*/}
+            </Route>
         </Router>
     </Provider>
 ), document.getElementById('app'));
