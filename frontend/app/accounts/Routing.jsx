@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route,} from 'react-router';
+import {Route} from 'react-router';
 
 import {Login} from './components/Login.jsx';
 import {Register} from './components/Register.jsx';

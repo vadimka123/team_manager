@@ -127,7 +127,7 @@ class LeftNav extends PureComponent {
             {
                 text: 'List of Tasks',
                 icon: <List />,
-                link: '/upload/'
+                link: '/'
             }
         ];
 

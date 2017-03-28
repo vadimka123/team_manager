@@ -20,6 +20,7 @@ import {setupAuthHeader, requireAuth} from './accounts/utils/utils.js';
 
 import Root from './Root.jsx';
 import AccountRouting from './accounts/Routing.jsx';
+import ListTasks from './tasks/components/ListTasks.jsx';
 import NotFoundPage from './utils/components/NotFoundPage.jsx';
 
 if (AuthHelper.isAuthenticated) {
@@ -61,6 +62,7 @@ ReactDOM.render((
         <Router history={history}>
             {AccountRouting}
             <Route path="/" component={Root} onEnter={requireAuth}>
+                <IndexRoute component={ListTasks} />
                 <Route path="*" component={NotFoundPage} />
             </Route>
         </Router>
