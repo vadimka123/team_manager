@@ -10,7 +10,9 @@ export const AccountConstants = keyMirror({
     LOGOUT: null,
     JWT_REFRESH_SUCCESS: null,
     JWT_REFRESH_FAIL: null,
-    JWT_TOKEN_EXPIRED: null
+    JWT_TOKEN_EXPIRED: null,
+    DEVELOPER_LIST_SUCCESS: null,
+    DEVELOPER_LIST_FAIL: null
 });
 
 export const USER_TYPE_TEAM_LEADER = 'TEAM_LEADER';

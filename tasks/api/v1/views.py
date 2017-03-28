@@ -1,5 +1,6 @@
 from rest_framework import generics, permissions
-from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.authentication import SessionAuthentication
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from tasks.api.v1 import serializers
 from tasks.models import Task
@@ -7,7 +8,7 @@ from accounts.choises import USER_TYPE_TEAM_CHIEF, USER_TYPE_TEAM_LEADER
 
 
 class TaskListCreateView(generics.ListCreateAPIView):
-    authentication_classes = (TokenAuthentication, SessionAuthentication,)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication,)
 
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = serializers.TaskSerializer

@@ -8,6 +8,22 @@ import {Notifier} from '../../utils/components/Notifier.js';
 
 
 class _AccountActions {
+    list() {
+        return dispatch => {
+            axios.get('/api/v1/account/').then(response => {
+                dispatch({
+                    type: AccountConstants.DEVELOPER_LIST_SUCCESS,
+                    data: response.data
+                });
+            }).catch(error => {
+                dispatch({
+                    type: AccountConstants.DEVELOPER_LIST_FAIL,
+                    data: error.response ? error.response.data : {}
+                });
+            });
+        }
+    }
+
     login(username, password, nextUrl) {
         return dispatch => {
             dispatch({

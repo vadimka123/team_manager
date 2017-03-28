@@ -6,7 +6,9 @@ import {TaskConstants} from '../Constants.js';
 
 const initialState = {
     tasks: [],
-    fetching: true
+    fetching: true,
+    saving: false,
+    errors: {}
 };
 
 export default (state=initialState, action) => {
@@ -14,7 +16,9 @@ export default (state=initialState, action) => {
         case LOCATION_CHANGE:
             state = {
                 tasks: [],
-                fetching: true
+                fetching: true,
+                saving: false,
+                errors: {}
             };
             break;
 
@@ -26,6 +30,20 @@ export default (state=initialState, action) => {
         case TaskConstants.TASK_LIST_FAIL:
             state.tasks = [];
             state.fetching = false;
+            break;
+
+        case TaskConstants.TASK_CREATE:
+            state.saving = true;
+            break;
+
+        case TaskConstants.TASK_CREATE_SUCCESS:
+            state.tasks = _.concat([], state.tasks, [action.data]);
+            state.saving = false;
+            break;
+
+        case TaskConstants.TASK_CREATE_FAIL:
+            state.errors = action.data;
+            state.saving = false;
             break;
     }
 

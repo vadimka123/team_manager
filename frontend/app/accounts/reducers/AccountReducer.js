@@ -58,6 +58,8 @@ export class AuthHelper {
 
 const initialState = {
     user: JSON.parse(localStorage.getItem('userData')) || {},
+    devUsers: [],
+    fetchDevUsers: true,
     errors: {},
     lock: false,
     provider: null
@@ -67,6 +69,8 @@ const initialState = {
 export default (state=initialState, action) => {
     switch(action.type) {
         case LOCATION_CHANGE:
+            state.devUsers = [];
+            state.fetchDevUsers = true;
             state.errors = {};
             state.lock = false;
             state.provider = false;
@@ -92,6 +96,16 @@ export default (state=initialState, action) => {
         case AccountConstants.REGISTER_FAIL:
             state.errors = action.data;
             state.lock = false;
+            break;
+
+        case AccountConstants.DEVELOPER_LIST_SUCCESS:
+            state.devUsers = action.data;
+            state.fetchDevUsers = false;
+            break;
+
+        case AccountConstants.DEVELOPER_LIST_FAIL:
+            state.devUsers = [];
+            state.fetchDevUsers = false;
             break;
 
         case AccountConstants.LOGOUT:

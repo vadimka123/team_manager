@@ -19,6 +19,26 @@ class _TaskActions {
             });
         }
     }
+
+    create(data) {
+        return dispatch => {
+            dispatch({
+                type: TaskConstants.TASK_CREATE
+            });
+
+            axios.post('/api/v1/tasks/', data).then(response => {
+                dispatch({
+                    type: TaskConstants.TASK_CREATE_SUCCESS,
+                    data: response.data
+                });
+            }).catch(error => {
+                dispatch({
+                    type: TaskConstants.TASK_CREATE_FAIL,
+                    data: error.response ? error.response.data : {}
+                });
+            });
+        }
+    }
 }
 
 export const TaskActions = new _TaskActions();

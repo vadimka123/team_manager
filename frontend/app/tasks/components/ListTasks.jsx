@@ -11,9 +11,12 @@ import _ from 'lodash';
 import moment from 'moment';
 
 import {TaskActions} from '../actions/TaskActions.js';
+import {AccountActions} from '../../accounts/actions/AccountActions.js';
 import {TASK_STATUSES} from '../Constants.js';
+import {USER_TYPE_TEAM_CHIEF} from '../../accounts/Constants.js'
 
 import Page from '../../utils/components/Page.jsx';
+import CreateTaskModal from './CreateTaskModal.jsx';
 
 
 const progressStyles =  {
@@ -61,8 +64,20 @@ const styles = {
     }
 };
 
-@connect(state => state.TaskReducer, null, null, {pure: false})
+@connect(state => ({
+    user: state.AccountReducer.user,
+    fetchDevUsers: state.AccountReducer.fetchDevUsers,
+    ...state.TaskReducer
+}), null, null, {pure: false})
 class ListTasks extends PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showCreateModal: false
+        };
+    };
+
     static displayName = 'List of Tasks';
 
     static propTypes = {
@@ -71,12 +86,21 @@ class ListTasks extends PureComponent {
 
     componentWillMount() {
         this.props.dispatch(TaskActions.list());
+        this.props.dispatch(AccountActions.list());
+    };
+
+    openCreateModal() {
+        this.setState({showCreateModal: true});
+    };
+
+    closeCreateModal() {
+        this.setState({showCreateModal: false});
     };
 
     render() {
-        const {tasks, fetching} = this.props;
+        const {tasks, user, fetching, fetchDevUsers} = this.props;
 
-        if (fetching)
+        if (fetching || fetchDevUsers)
             return (
                 <div style={progressStyles}>
                     <CircularProgress size={120} thickness={5} />
@@ -85,52 +109,56 @@ class ListTasks extends PureComponent {
 
         return (
             <Page title="List of Tasks" navigation="Team Manager / List of Tasks">
-                <Link to="/form" >
-                    <FloatingActionButton style={styles.floatingActionButton} backgroundColor={pink500}>
-                        <ContentAdd />
-                    </FloatingActionButton>
-                </Link>
-                <Table selectable={false}>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHeaderColumn style={styles.columns.label}>Label</TableHeaderColumn>
-                            <TableHeaderColumn style={styles.columns.description}>Description</TableHeaderColumn>
-                            <TableHeaderColumn style={styles.columns.developer}>Developer</TableHeaderColumn>
-                            <TableHeaderColumn style={styles.columns.status}>Status</TableHeaderColumn>
-                            <TableHeaderColumn style={styles.columns.eta}>Dev ETA</TableHeaderColumn>
-                            <TableHeaderColumn style={styles.columns.edit}>Edit</TableHeaderColumn>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {_.map(tasks, task =>
-                            <TableRow key={task.id}>
-                                <TableRowColumn style={styles.columns.label}>{task.label}</TableRowColumn>
-                                <TableRowColumn style={styles.columns.description}>
-                                    {task.description}
-                                </TableRowColumn>
-                                <TableRowColumn style={styles.columns.developer}>
-                                    {task.user_dev.username}
-                                </TableRowColumn>
-                                <TableRowColumn style={styles.columns.status}>
-                                    {TASK_STATUSES[task.status]}
-                                </TableRowColumn>
-                                <TableRowColumn style={styles.columns.eta}>
-                                    {moment(task.dev_eta).format('L')}
-                                </TableRowColumn>
-                                <TableRowColumn style={styles.columns.edit}>
-                                    <Link className="button" to="/form">
-                                        <FloatingActionButton zDepth={0}
-                                                              mini={true}
-                                                              backgroundColor={grey200}
-                                                              iconStyle={styles.editButton}>
-                                            <ContentCreate  />
-                                        </FloatingActionButton>
-                                    </Link>
-                                </TableRowColumn>
+                <div>
+                    {user.account_type === USER_TYPE_TEAM_CHIEF &&
+                        <FloatingActionButton style={styles.floatingActionButton} backgroundColor={pink500}
+                                              onClick={::this.openCreateModal}>
+                            <ContentAdd />
+                            <CreateTaskModal show={this.state.showCreateModal} onHide={::this.closeCreateModal} />
+                        </FloatingActionButton>
+                    }
+                    <Table selectable={false}>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHeaderColumn style={styles.columns.label}>Label</TableHeaderColumn>
+                                <TableHeaderColumn style={styles.columns.description}>Description</TableHeaderColumn>
+                                <TableHeaderColumn style={styles.columns.developer}>Developer</TableHeaderColumn>
+                                <TableHeaderColumn style={styles.columns.status}>Status</TableHeaderColumn>
+                                <TableHeaderColumn style={styles.columns.eta}>Dev ETA</TableHeaderColumn>
+                                <TableHeaderColumn style={styles.columns.edit}>Edit</TableHeaderColumn>
                             </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
+                        </TableHeader>
+                        <TableBody>
+                            {_.map(tasks, task =>
+                                <TableRow key={task.id}>
+                                    <TableRowColumn style={styles.columns.label}>{task.label}</TableRowColumn>
+                                    <TableRowColumn style={styles.columns.description}>
+                                        {task.description}
+                                    </TableRowColumn>
+                                    <TableRowColumn style={styles.columns.developer}>
+                                        {task.user_dev ? task.user_dev.username : ''}
+                                    </TableRowColumn>
+                                    <TableRowColumn style={styles.columns.status}>
+                                        {TASK_STATUSES[task.status]}
+                                    </TableRowColumn>
+                                    <TableRowColumn style={styles.columns.eta}>
+                                        {moment(task.dev_eta).format('L')}
+                                    </TableRowColumn>
+                                    <TableRowColumn style={styles.columns.edit}>
+                                        <Link className="button" to="/form">
+                                            <FloatingActionButton zDepth={0}
+                                                                  mini={true}
+                                                                  backgroundColor={grey200}
+                                                                  iconStyle={styles.editButton}>
+                                                <ContentCreate  />
+                                            </FloatingActionButton>
+                                        </Link>
+                                    </TableRowColumn>
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </div>
             </Page>
         );
     };

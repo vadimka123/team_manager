@@ -5,7 +5,7 @@ from accounts.api.v1.serializers import UserFullSerializer
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    user_dev = UserFullSerializer()
+    user_dev = UserFullSerializer(required=False)
 
     class Meta:
         model = Task
