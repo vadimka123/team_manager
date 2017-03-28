@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
-from choises import USER_TYPES, USER_TYPE_TEAM_WORKER
+from choises import USER_TYPES, USER_TYPE_TEAM_WORKER, USER_TYPE_TEAM_CHIEF
 
 
 class CustomUserManager(BaseUserManager):
@@ -9,10 +9,7 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError(u'Users must have an email address')
 
-        user = self.model(
-            email=self.normalize_email(email),
-            username=username,
-        )
+        user = self.model(username=username,)
 
         user.set_password(password)
         user.save(using=self._db)
@@ -22,6 +19,7 @@ class CustomUserManager(BaseUserManager):
         user = self.create_user(email, username=username, password=password)
         user.is_admin = True
         user.is_superuser = True
+        user.account_type = USER_TYPE_TEAM_CHIEF
         user.save(using=self._db)
         return user
 
@@ -48,10 +46,16 @@ class CustomUser(AbstractBaseUser):
     def get_short_name(self):
         return self.username
 
-    def has_perm(self, perm, obj=None):
+    @staticmethod
+    def is_staff():
         return True
 
-    def has_module_perms(self, app_label):
+    @staticmethod
+    def has_perm(perm, obj=None):
+        return True
+
+    @staticmethod
+    def has_module_perms(app_label):
         return True
 
 CustomUser._meta.get_field('password').max_length = 256

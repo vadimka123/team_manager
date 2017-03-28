@@ -1,16 +1,26 @@
 import React, {PureComponent, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {spacing, typography} from 'material-ui/styles';
 import withWidth, {LARGE, SMALL} from 'material-ui/utils/withWidth';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import List from 'material-ui/svg-icons/action/list';
+import FileFileUpload from 'material-ui/svg-icons/file/file-upload';
 import Menu from 'material-ui/svg-icons/navigation/menu';
-import {white} from 'material-ui/styles/colors';
+import {white, blue600} from 'material-ui/styles/colors';
+import Avatar from 'material-ui/Avatar';
+import Drawer from 'material-ui/Drawer';
+import {Link} from 'react-router';
+import _ from 'lodash';
 
 import ThemeDefault from './theme-default.js';
+import {USER_TYPES, USER_TYPE_TEAM_LEADER,
+        USER_TYPE_TEAM_CHIEF, USER_TYPE_TEAM_WORKER
+} from './accounts/Constants.js';
 
 import {AccountActions} from './accounts/actions/AccountActions.js';
 
@@ -67,12 +77,104 @@ class Header extends PureComponent {
     };
 }
 
+const styles = {
+    logo: {
+        cursor: 'pointer',
+        fontSize: 22,
+        color: typography.textFullWhite,
+        lineHeight: `${spacing.desktopKeylineIncrement}px`,
+        fontWeight: typography.fontWeightLight,
+        backgroundColor: blue600,
+        paddingLeft: 40,
+        height: 56,
+    },
+    menuItem: {
+        color: white,
+        fontSize: 14
+    },
+    avatar: {
+        div: {
+            padding: '15px 0 20px 15px',
+            height: 45
+        },
+        icon: {
+            float: 'left',
+            display: 'block',
+            marginRight: 15,
+            boxShadow: '0px 0px 0px 8px rgba(0,0,0,0.2)'
+        },
+        span: {
+            display: 'block',
+            color: 'white',
+            fontWeight: 300,
+            textShadow: '1px 1px #444'
+        }
+    }
+};
+
+class LeftNav extends PureComponent {
+    static displayName = 'Left Navigation';
+
+    static propTypes = {
+        user: PropTypes.object.isRequired,
+        navDrawerOpen: PropTypes.bool
+    };
+
+    getMenusData() {
+        const {user, navDrawerOpen} = this.props;
+
+        let data = [
+            {
+                text: 'List of Tasks',
+                icon: <List />,
+                link: '/upload/'
+            }
+        ];
+
+        if (user.account_type === USER_TYPE_TEAM_CHIEF)
+            data.push({
+                text: 'Upload List',
+                icon: <FileFileUpload />,
+                link: '/upload/'
+            });
+
+        return data;
+    };
+
+    render() {
+        const {user, navDrawerOpen} = this.props;
+
+        return (
+            <Drawer docked={true} open={navDrawerOpen}>
+                <div style={styles.logo}>
+                    Team Manager
+                </div>
+                <div style={styles.avatar.div}>
+                    <Avatar src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Default-avatar.jpg" size={50}
+                            style={styles.avatar.icon} />
+                    <span style={styles.avatar.span}>{user.username}</span>
+                    <span style={styles.avatar.span}>
+                        {USER_TYPES[user.account_type]}
+                    </span>
+                </div>
+                <div>
+                    {_.map(this.getMenusData(), (menu, index) =>
+                        <MenuItem key={index} style={styles.menuItem} primaryText={menu.text}
+                                  leftIcon={menu.icon} containerElement={<Link to={menu.link} />} />
+                    )}
+                </div>
+            </Drawer>
+        );
+    };
+}
+
+@connect(state => state.AccountReducer)
 @withWidth()
 class Root extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            navDrawerOpen: false
+            navDrawerOpen: true
         };
     };
 
@@ -111,10 +213,10 @@ class Root extends PureComponent {
             <MuiThemeProvider muiTheme={ThemeDefault}>
                 <div>
                     <Header styles={styles.header} handleChangeRequestNavDrawer={::this.handleChangeRequestNavDrawer}/>
-                    {/*<LeftDrawer navDrawerOpen={navDrawerOpen} menus={Data.menus} username="User Admin"/>
+                    <LeftNav navDrawerOpen={navDrawerOpen} user={this.props.user} />
                     <div style={styles.container}>
                         {this.props.children}
-                    </div>*/}
+                    </div>
                 </div>
             </MuiThemeProvider>
         );

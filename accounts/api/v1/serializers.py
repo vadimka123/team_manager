@@ -12,8 +12,8 @@ jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 class UserFullSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('id', 'username',)
-        read_only_fields = ('username',)
+        fields = ('id', 'username', 'account_type',)
+        read_only_fields = ('username', 'account_type',)
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
