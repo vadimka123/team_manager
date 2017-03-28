@@ -47,13 +47,10 @@ const styles = {
             width: '30%'
         },
         developer: {
-            width: '10%'
+            width: '15%'
         },
         status: {
-            width: '10%'
-        },
-        reporter: {
-            width: '10%'
+            width: '15%'
         },
         eta: {
             width: '15%'
@@ -101,7 +98,6 @@ class ListTasks extends PureComponent {
                             <TableHeaderColumn style={styles.columns.developer}>Developer</TableHeaderColumn>
                             <TableHeaderColumn style={styles.columns.status}>Status</TableHeaderColumn>
                             <TableHeaderColumn style={styles.columns.eta}>Dev ETA</TableHeaderColumn>
-                            <TableHeaderColumn style={styles.columns.reporter}>Reporter</TableHeaderColumn>
                             <TableHeaderColumn style={styles.columns.edit}>Edit</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
@@ -120,9 +116,6 @@ class ListTasks extends PureComponent {
                                 </TableRowColumn>
                                 <TableRowColumn style={styles.columns.eta}>
                                     {moment(task.dev_eta).format('L')}
-                                </TableRowColumn>
-                                <TableRowColumn style={styles.columns.reporter}>
-                                    {task.user_created.username}
                                 </TableRowColumn>
                                 <TableRowColumn style={styles.columns.edit}>
                                     <Link className="button" to="/form">
