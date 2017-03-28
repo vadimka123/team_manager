@@ -34,8 +34,10 @@ class CreateTaskModal extends PureComponent {
     };
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.saving && !nextProps.saving && _.size(nextProps.errors) === 0)
+        if (this.props.saving && !nextProps.saving && _.size(nextProps.errors) === 0) {
             nextProps.onHide();
+            this.setState({label: null, description: null, dev_eta: null});
+        }
     };
 
     changeInput(key, value) {
