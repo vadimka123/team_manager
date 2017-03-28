@@ -1,4 +1,5 @@
 import React, {PureComponent, PropTypes} from 'react';
+import {connect} from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import withWidth, {LARGE, SMALL} from 'material-ui/utils/withWidth';
 import AppBar from 'material-ui/AppBar';
@@ -11,11 +12,15 @@ import {white} from 'material-ui/styles/colors';
 
 import ThemeDefault from './theme-default.js';
 
+import {AccountActions} from './accounts/actions/AccountActions.js';
 
+
+@connect()
 class Header extends PureComponent {
     static displayName = 'Header';
 
     static propTypes = {
+        dispatch: PropTypes.func.isRequired,
         styles: PropTypes.object,
         handleChangeRequestNavDrawer: PropTypes.func
     };
@@ -53,7 +58,8 @@ class Header extends PureComponent {
                                       }
                                       targetOrigin={{horizontal: 'right', vertical: 'top'}}
                                       anchorOrigin={{horizontal: 'right', vertical: 'top'}}>
-                                <MenuItem primaryText="Sign out"/>
+                                <MenuItem primaryText="Sign out"
+                                          onClick={() => this.props.dispatch(AccountActions.logout())}/>
                             </IconMenu>
                         </div>
                     } />
