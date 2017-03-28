@@ -1,5 +1,6 @@
 appdirs==1.4.3
 Django==1.10.6
+django-debug-toolbar
 djangorestframework==3.3.3
 djangorestframework-jwt==1.7.2
 djangorestframework-bulk==0.2.1
