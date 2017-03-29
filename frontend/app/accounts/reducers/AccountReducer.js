@@ -1,7 +1,6 @@
 import {LOCATION_CHANGE} from 'react-router-redux';
 
 import {AccountConstants} from '../Constants.js';
-import {Notifier} from '../../utils/components/Notifier.js';
 import {JwtHelper} from '../utils/jwt.js';
 import {setupAuthHeader} from '../utils/utils.js';
 

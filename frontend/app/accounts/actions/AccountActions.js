@@ -4,8 +4,6 @@ import {replace} from 'react-router-redux';
 import {AuthHelper} from '../reducers/AccountReducer.js';
 import {AccountConstants} from '../Constants.js';
 
-import {Notifier} from '../../utils/components/Notifier.js';
-
 
 class _AccountActions {
     list() {

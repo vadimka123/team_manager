@@ -13,10 +13,6 @@ class TaskListCreateView(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = serializers.TaskSerializer
 
-    def perform_create(self, serializer):
-        user = self.request.user
-        serializer.save(user_created=user)
-
     def get_queryset(self):
         if self.request.user.account_type in (USER_TYPE_TEAM_CHIEF, USER_TYPE_TEAM_LEADER):
             return Task.objects.all().select_related('user_dev')

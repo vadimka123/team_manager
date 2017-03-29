@@ -5,7 +5,6 @@ from choises import TASK_STATUSES, TASK_STATUS_TODO
 
 
 class Task(models.Model):
-    user_created = models.ForeignKey(CustomUser, related_name='task_created')
     created = models.DateTimeField(auto_now_add=True)
     user_dev = models.ForeignKey(CustomUser, null=True, related_name='task_dev')
     dev_eta = models.DateField(null=True, blank=False)
