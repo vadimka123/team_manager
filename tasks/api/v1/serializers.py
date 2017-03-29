@@ -7,8 +7,8 @@ from accounts.api.v1.serializers import UserFullSerializer
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    user_dev = serializers.PrimaryKeyRelatedField(write_only=True, required=False, queryset=CustomUser.objects.filter(
-        account_type=USER_TYPE_TEAM_WORKER))
+    user_dev = serializers.PrimaryKeyRelatedField(write_only=True, required=False, allow_null=True,
+                                                  queryset=CustomUser.objects.filter(account_type=USER_TYPE_TEAM_WORKER))
 
     def to_representation(self, instance):
         result = super(TaskSerializer, self).to_representation(instance)

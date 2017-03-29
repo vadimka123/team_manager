@@ -107,7 +107,7 @@ class UpdateTaskModal extends PureComponent {
                                value={description || ''} disabled={updating} errorText={errors.description}
                                onChange={e => this.changeInput('description', e.target.value)} />
                     <SelectField hintText="Status" floatingLabelText="Status" fullWidth={true}
-                                 value={status || ''} disabled={updating} errorText={errors.user_dev}
+                                 value={status || ''} disabled={updating} errorText={errors.status}
                                  onChange={(e, i, val) => this.changeInput('status', val)}>
                         <MenuItem value={TASK_STATUS_TODO} primaryText={TASK_STATUSES[TASK_STATUS_TODO]} />
                         <MenuItem value={TASK_STATUS_IN_PROGRESS} primaryText={TASK_STATUSES[TASK_STATUS_IN_PROGRESS]} />
