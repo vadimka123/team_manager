@@ -18,6 +18,6 @@ export const TASK_STATUS_DONE = 'DONE';
 
 export const TASK_STATUSES = {
     TODO: 'Todo',
-    TASK_STATUS_IN_PROGRESS: 'In progress',
-    TASK_STATUS_DONE: 'Done'
+    IN_PROGRESS: 'In progress',
+    DONE: 'Done'
 };
