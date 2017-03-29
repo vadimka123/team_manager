@@ -8,6 +8,7 @@ const initialState = {
     tasks: [],
     fetching: true,
     saving: false,
+    updating: false,
     errors: {}
 };
 
@@ -33,10 +34,12 @@ export default (state=initialState, action) => {
             break;
 
         case TaskConstants.TASK_CREATE:
+            state.errors = {};
             state.saving = true;
             break;
 
         case TaskConstants.TASK_CREATE_SUCCESS:
+            state.errors = {};
             state.tasks = _.concat([], state.tasks, [action.data]);
             state.saving = false;
             break;
@@ -44,6 +47,27 @@ export default (state=initialState, action) => {
         case TaskConstants.TASK_CREATE_FAIL:
             state.errors = action.data;
             state.saving = false;
+            break;
+
+        case TaskConstants.TASK_UPDATE:
+            state.errors = {};
+            state.updating = true;
+            break;
+
+        case TaskConstants.TASK_UPDATE_SUCCESS:
+            state.tasks = _.map(state.tasks, task => {
+                if (task.id === action.data.id)
+                    task = _.merge({}, task, action.data);
+
+                return task;
+            });
+            state.errors = {};
+            state.updating = false;
+            break;
+
+        case TaskConstants.TASK_UPDATE_FAIL:
+            state.errors = action.data;
+            state.updating = false;
             break;
     }
 

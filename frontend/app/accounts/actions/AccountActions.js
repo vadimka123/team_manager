@@ -85,7 +85,7 @@ class _AccountActions {
                     data: error.response ? error.response.data : {}
                 });
 
-                if (error.response.status === 400)
+                if (error.response && error.response.status === 400)
                     dispatch(AccountConstants.logout());
             });
         }

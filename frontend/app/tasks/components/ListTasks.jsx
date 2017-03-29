@@ -17,6 +17,7 @@ import {USER_TYPE_TEAM_CHIEF} from '../../accounts/Constants.js'
 
 import Page from '../../utils/components/Page.jsx';
 import CreateTaskModal from './CreateTaskModal.jsx';
+import UpdateTaskModal from './UpdateTaskModal.jsx';
 
 
 const progressStyles =  {
@@ -74,7 +75,8 @@ class ListTasks extends PureComponent {
         super(props);
 
         this.state = {
-            showCreateModal: false
+            showCreateModal: false,
+            chosenTask: null
         };
     };
 
@@ -95,6 +97,14 @@ class ListTasks extends PureComponent {
 
     closeCreateModal() {
         this.setState({showCreateModal: false});
+    };
+
+    openUpdateModal(task) {
+        this.setState({chosenTask: _.clone(task)});
+    };
+
+    closeUpdateModal() {
+        this.setState({chosenTask: null});
     };
 
     render() {
@@ -145,19 +155,18 @@ class ListTasks extends PureComponent {
                                         {moment(task.dev_eta).format('L')}
                                     </TableRowColumn>
                                     <TableRowColumn style={styles.columns.edit}>
-                                        <Link className="button" to="/form">
-                                            <FloatingActionButton zDepth={0}
-                                                                  mini={true}
-                                                                  backgroundColor={grey200}
-                                                                  iconStyle={styles.editButton}>
-                                                <ContentCreate  />
-                                            </FloatingActionButton>
-                                        </Link>
+                                        <FloatingActionButton zDepth={0} mini={true} backgroundColor={grey200}
+                                                              iconStyle={styles.editButton}
+                                                              onClick={() => this.openUpdateModal(task)}>
+                                            <ContentCreate  />
+                                        </FloatingActionButton>
                                     </TableRowColumn>
                                 </TableRow>
                             )}
                         </TableBody>
                     </Table>
+                    <UpdateTaskModal show={!!this.state.chosenTask} task={this.state.chosenTask}
+                                     onHide={::this.closeUpdateModal} />
                 </div>
             </Page>
         );

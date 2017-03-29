@@ -6,7 +6,10 @@ export const TaskConstants = keyMirror({
     TASK_LIST_FAIL: null,
     TASK_CREATE: null,
     TASK_CREATE_SUCCESS: null,
-    TASK_CREATE_FAIL: null
+    TASK_CREATE_FAIL: null,
+    TASK_UPDATE: null,
+    TASK_UPDATE_SUCCESS: null,
+    TASK_UPDATE_FAIL: null
 });
 
 export const TASK_STATUS_TODO = 'TODO';
