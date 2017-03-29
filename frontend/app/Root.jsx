@@ -18,9 +18,7 @@ import {Link} from 'react-router';
 import _ from 'lodash';
 
 import ThemeDefault from './theme-default.js';
-import {USER_TYPES, USER_TYPE_TEAM_LEADER,
-        USER_TYPE_TEAM_CHIEF, USER_TYPE_TEAM_WORKER
-} from './accounts/Constants.js';
+import {USER_TYPES, USER_TYPE_TEAM_CHIEF} from './accounts/Constants.js';
 
 import {AccountActions} from './accounts/actions/AccountActions.js';
 

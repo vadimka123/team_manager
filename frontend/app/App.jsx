@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, IndexRoute} from 'react-router';
 import {Provider} from 'react-redux';
-import axios from 'axios';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import _ from 'lodash';
 import './styles.scss';
 import 'font-awesome/css/font-awesome.css';
 import 'flexboxgrid/css/flexboxgrid.css';
@@ -20,6 +18,7 @@ import {setupAuthHeader, requireAuth} from './accounts/utils/utils.js';
 import Root from './Root.jsx';
 import AccountRouting from './accounts/Routing.jsx';
 import ListTasks from './tasks/components/ListTasks.jsx';
+import UploadFile from './upload/components/UploadFile.jsx';
 import NotFoundPage from './utils/components/NotFoundPage.jsx';
 
 if (AuthHelper.isAuthenticated) {
@@ -36,6 +35,7 @@ ReactDOM.render((
             {AccountRouting}
             <Route path="/" component={Root} onEnter={requireAuth}>
                 <IndexRoute component={ListTasks} />
+                <Route path="upload/" component={UploadFile} />
                 <Route path="*" component={NotFoundPage} />
             </Route>
         </Router>
