@@ -113,11 +113,13 @@ class UpdateTaskModal extends PureComponent {
                         <MenuItem value={TASK_STATUS_IN_PROGRESS} primaryText={TASK_STATUSES[TASK_STATUS_IN_PROGRESS]} />
                         <MenuItem value={TASK_STATUS_DONE} primaryText={TASK_STATUSES[TASK_STATUS_DONE]} />
                     </SelectField>
-                    <SelectField hintText="Developer" floatingLabelText="Developer" fullWidth={true}
-                                 value={user_dev || ''} disabled={updating || user.account_type !== USER_TYPE_TEAM_LEADER}
-                                 errorText={errors.user_dev} onChange={(e, i, val) => this.changeInput('user_dev', val)}>
-                        {this.devItems()}
-                    </SelectField>
+                    {user.account_type === USER_TYPE_TEAM_LEADER &&
+                        <SelectField hintText="Developer" floatingLabelText="Developer" fullWidth={true}
+                                     value={user_dev || ''} disabled={updating} errorText={errors.user_dev}
+                                     onChange={(e, i, val) => this.changeInput('user_dev', val)}>
+                            {this.devItems()}
+                        </SelectField>
+                    }
                     <DatePicker hintText="Dev ETA" floatingLabelText="Dev ETA" fullWidth={true}
                                 value={dev_eta} disabled={updating} errorText={errors.dev_eta}
                                 onChange={(e, val) => this.changeInput('dev_eta', val)} />
