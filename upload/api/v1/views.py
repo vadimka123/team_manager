@@ -71,9 +71,9 @@ class GeneratePreviewView(generics.GenericAPIView, PreviewGenerator):
         else:
             mapping = dict()
 
-        headers = csv.reader(file, encoding=encoding, delimiter=delimiter).next()
+        headers = csv.reader(file.replace(u'\0', u''), encoding=encoding, delimiter=delimiter).next()
 
-        reader = csv.DictReader(file, fieldnames=headers, encoding=encoding, delimiter=delimiter)
+        reader = csv.DictReader(file.replace(u'\0', u''), fieldnames=headers, encoding=encoding, delimiter=delimiter)
 
         result = []
         for v in self.generate(reader, mapping):
@@ -96,9 +96,9 @@ class ImportView(generics.GenericAPIView, PreviewGenerator):
         else:
             mapping = dict()
 
-        headers = csv.reader(file, encoding=encoding, delimiter=delimiter).next()
+        headers = csv.reader(file.replace(u'\0', u''), encoding=encoding, delimiter=delimiter).next()
 
-        reader = csv.DictReader(file, fieldnames=headers, encoding=encoding, delimiter=delimiter)
+        reader = csv.DictReader(file.replace(u'\0', u''), fieldnames=headers, encoding=encoding, delimiter=delimiter)
 
         records = []
         for v in self.generate(reader, mapping):
