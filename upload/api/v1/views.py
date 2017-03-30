@@ -20,7 +20,7 @@ class RecheckFileView(generics.GenericAPIView):
         file_delimiter = get_delimiter(request.data.get(u'file_delimiter', None), file)
         file_charset = get_file_encoding(file, request.data.get(u'file_charset', None))
 
-        headers = csv.reader(file, encoding=file_charset, delimiter=file_delimiter).next()
+        headers = csv.reader(file.replace(u'\0', u''), encoding=file_charset, delimiter=file_delimiter).next()
 
         return response.Response(data={
             u'headers': headers,
