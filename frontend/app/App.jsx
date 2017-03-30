@@ -13,7 +13,7 @@ import {AuthHelper} from './accounts/reducers/AccountReducer.js';
 
 import {AccountActions} from './accounts/actions/AccountActions.js';
 
-import {setupAuthHeader, requireAuth} from './accounts/utils/utils.js';
+import {setupAuthHeader, requireAuth, requireStaff} from './accounts/utils/utils.js';
 
 import Root from './Root.jsx';
 import AccountRouting from './accounts/Routing.jsx';
@@ -35,7 +35,7 @@ ReactDOM.render((
             {AccountRouting}
             <Route path="/" component={Root} onEnter={requireAuth}>
                 <IndexRoute component={ListTasks} />
-                <Route path="upload/" component={UploadFile} />
+                <Route path="upload/" component={UploadFile} onEnter={requireStaff} />
                 <Route path="*" component={NotFoundPage} />
             </Route>
         </Router>

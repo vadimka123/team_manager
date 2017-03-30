@@ -46,3 +46,9 @@ export function requireAuth(nextState, replace) {
 
     replace(path);
 }
+
+export function requireStaff(nextState, replace) {
+    if (AuthHelper.isAuthenticated && AuthHelper.isStaff) return;
+
+    replace('/');
+}

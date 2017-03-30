@@ -1,6 +1,6 @@
 import {LOCATION_CHANGE} from 'react-router-redux';
 
-import {AccountConstants} from '../Constants.js';
+import {AccountConstants, USER_TYPE_TEAM_CHIEF} from '../Constants.js';
 import {JwtHelper} from '../utils/jwt.js';
 import {setupAuthHeader} from '../utils/utils.js';
 
@@ -23,7 +23,7 @@ export class AuthHelper {
     };
 
     static get isStaff() {
-        return AuthHelper.isAuthenticated && AuthHelper.user.is_staff;
+        return AuthHelper.isAuthenticated && AuthHelper.user.account_type === USER_TYPE_TEAM_CHIEF;
     };
 
     static get token() {
