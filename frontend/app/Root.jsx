@@ -1,4 +1,4 @@
-import React, {PureComponent, PropTypes} from 'react';
+import React, {PureComponent, Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {spacing, typography} from 'material-ui/styles';
@@ -110,7 +110,7 @@ const styles = {
     }
 };
 
-class LeftNav extends PureComponent {
+class LeftNav extends Component {
     static displayName = 'Left Navigation';
 
     static propTypes = {

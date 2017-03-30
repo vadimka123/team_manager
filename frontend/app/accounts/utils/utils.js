@@ -29,9 +29,9 @@ export function requireAuth(nextState, replace) {
         let timeToExpired = AuthHelper.tokenExpirationDate - new Date().valueOf() - 5000;
 
         timeout = setTimeout(() => {
-            store.dispatch(AuthActions.refreshToken());
+            store.dispatch(AccountActions.refreshToken());
             interval = setInterval(() => {
-                store.dispatch(AuthActions.refreshToken());
+                store.dispatch(AccountActions.refreshToken());
             }, 5400000)
         }, (timeToExpired && timeToExpired > 0) ? timeToExpired : 0);
     }
