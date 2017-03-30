@@ -84,8 +84,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=5),
-    'JWT_PAYLOAD_HANDLER':
-    'accounts.api.utils.jwt.jwt_payload_handler',
+    'JWT_PAYLOAD_HANDLER': 'accounts.api.utils.jwt.jwt_payload_handler',
     'JWT_PAYLOAD_GET_USERNAME_HANDLER': 'accounts.api.utils.jwt.jwt_get_username_from_payload_handler'
 }
 
