@@ -118,14 +118,19 @@ class LeftNav extends PureComponent {
         navDrawerOpen: PropTypes.bool
     };
 
+    static contextTypes = {
+        router: PropTypes.object.isRequired
+    };
+
     getMenusData() {
-        const {user, navDrawerOpen} = this.props;
+        const {user} = this.props;
 
         let data = [
             {
                 text: 'List of Tasks',
                 icon: <List />,
-                link: '/'
+                link: '/',
+                disabled: this.context.router.isActive('/') && !this.context.router.isActive('/upload/')
             }
         ];
 
@@ -133,7 +138,8 @@ class LeftNav extends PureComponent {
             data.push({
                 text: 'Upload List',
                 icon: <FileFileUpload />,
-                link: '/upload/'
+                link: '/upload/',
+                disabled: this.context.router.isActive('/upload/')
             });
 
         return data;
@@ -157,7 +163,7 @@ class LeftNav extends PureComponent {
                 </div>
                 <div>
                     {_.map(this.getMenusData(), (menu, index) =>
-                        <MenuItem key={index} style={styles.menuItem} primaryText={menu.text}
+                        <MenuItem key={index} style={styles.menuItem} primaryText={menu.text} disabled={menu.disabled}
                                   leftIcon={menu.icon} containerElement={<Link to={menu.link} />} />
                     )}
                 </div>

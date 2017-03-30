@@ -330,7 +330,7 @@ class UploadFile extends PureComponent {
                             <div style={{marginTop: 12}}>
                                 <FlatButton label="Back" disabled={stepIndex === 0} onTouchTap={::this.handlePrev}
                                             style={{marginRight: 12}} />
-                                <RaisedButton label={stepIndex === 2 ? 'Finish' : 'Next'} primary={true}
+                                <RaisedButton label={stepIndex === 2 ? 'Import to Database' : 'Next'} primary={true}
                                               disabled={!this.getIsAllowedNextStep(stepIndex)}
                                               onTouchTap={::this.handleNext} />
                             </div>
